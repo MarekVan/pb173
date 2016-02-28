@@ -21,25 +21,27 @@ int main(int argc, char *argv[]) {
 	mbedtls_cipher_context_t aes_ctx;
 	mbedtls_sha512_context sha_ctx;
 
-	input = fopen(argv[1], "rb");
+	errno_t err;
 
-	if (!input)
+	err = fopen_s(&input, argv[1], "rb");
+
+	if (err == 0)
 	{
 		printf("coudlnt open input file\n");
 		return 0;
 	}
 
-	output = fopen(argv[2], "wb");
+	err = fopen_s(&output, argv[1], "wb");
 
-	if (!output)
+	if (err == 0)
 	{
 		printf("coudlnt open output file\n");
 		return 0;
 	}
 
-	keyfile = fopen(argv[3], "rb");
+	err = fopen_s(&keyfile, argv[1], "rb");
 
-	if (!keyfile)
+	if (err == 0)
 	{
 		printf("coudlnt open key file\n");
 		return 0;
@@ -47,6 +49,7 @@ int main(int argc, char *argv[]) {
 
 	//mbedtls_aes_init(&aes_ctx);
 	fread(key, 1, 16, keyfile);
+	fclose(keyfile);
 	//mbedtls_aes_setkey_enc(&aes_ctx, key, 128);
 
 	mbedtls_cipher_setup(&aes_ctx, mbedtls_cipher_info_from_type(MBEDTLS_CIPHER_AES_128_CBC));
@@ -75,6 +78,7 @@ int main(int argc, char *argv[]) {
 			if (fread(cinput, 1, n, input) != (size_t)n)
 			{
 				printf("fread failed\n");
+				fclose(input);
 				return 0;
 			}
 
@@ -87,6 +91,8 @@ int main(int argc, char *argv[]) {
 			if (fwrite(coutput, 1, n, output) != n)
 			{
 				printf("fwrite failed\n");
+				fclose(input);
+				fclose(output);
 				return 0;
 			}
 		}
@@ -117,6 +123,8 @@ int main(int argc, char *argv[]) {
 			if (fread(cinput, 1, n, input) != (size_t)n)
 			{
 				printf("fread failed\n");
+				fclose(input);
+				fclose(output);
 				return 0;
 			}
 
@@ -128,6 +136,8 @@ int main(int argc, char *argv[]) {
 			if (fwrite(coutput, 1, n, output) != n)
 			{
 				printf("fwrite failed\n");
+				fclose(input);
+				fclose(output);
 				return 0;
 			}
 		}
@@ -140,7 +150,6 @@ int main(int argc, char *argv[]) {
 		if (memcmp(control_hash, sha_output, 64) != 0)
 		{
 			printf("wrong hash\n");
-			return 0;
 		}
 		else
 		{
@@ -151,8 +160,10 @@ int main(int argc, char *argv[]) {
 	else
 	{
 		printf("unknown operation\n");
-		return 0;
 	}
+
+	fclose(input);
+	fclose(output);
 
 	return 0;
 }
