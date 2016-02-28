@@ -7,8 +7,6 @@
 #include "mbedtls/aesni.h"
 #include "mbedtls/sha512.h"
 
-using namespace std;
-
 //"C:\Users\Marek Vanèík\Documents\Visual Studio 2015\Projects\mbedtls-2.2.1\visualc\VS2010\Release\mbedTSL.lib"
 
 int main(int argc, char *argv[]) {
@@ -16,7 +14,7 @@ int main(int argc, char *argv[]) {
 	FILE *input, *output, *keyfile;
 	int offset;
 	unsigned char key[16];
-	unsigned char IV[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+	unsigned char IV[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 	unsigned char cinput[16];
 	unsigned char coutput[16];
 	unsigned char sha_output[64];
@@ -24,6 +22,10 @@ int main(int argc, char *argv[]) {
 	//mbedtls_aes_context aes_ctx;
 	mbedtls_cipher_context_t aes_ctx;
 	mbedtls_sha512_context sha_ctx;
+
+	unsigned char a[500];
+
+	printf("ide to");
 
 	input = fopen(argv[1], "rb");
 
@@ -151,6 +153,8 @@ int main(int argc, char *argv[]) {
 		printf("unknown operation");
 		return 0;
 	}
+
+	scanf("%s", a);
 
 	return 0;
 }
