@@ -1,13 +1,11 @@
-#include "mbedtls/cipher.h"
-#include "mbedtls/aes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "mbedtls/md.h"
 #include "mbedtls/aesni.h"
 #include "mbedtls/sha512.h"
-
-//"C:\Users\Marek Vanèík\Documents\Visual Studio 2015\Projects\mbedtls-2.2.1\visualc\VS2010\Release\mbedTSL.lib"
+#include "mbedtls/cipher.h"
+#include "mbedtls/aes.h"
 
 int main(int argc, char *argv[]) {
 
@@ -22,10 +20,6 @@ int main(int argc, char *argv[]) {
 	//mbedtls_aes_context aes_ctx;
 	mbedtls_cipher_context_t aes_ctx;
 	mbedtls_sha512_context sha_ctx;
-
-	unsigned char a[500];
-
-	printf("ide to");
 
 	input = fopen(argv[1], "rb");
 
@@ -103,6 +97,12 @@ int main(int argc, char *argv[]) {
 
 	else if (strcmp(argv[4], "-d") == 0)  // decrytion
 	{
+		if (filesize < 16)
+		{
+			printf("file is invalid\n");
+			return 0;
+		}
+
 		fread(IV, 1, 16, input);
 		mbedtls_sha512_update(&sha_ctx, IV, 16);
 
@@ -150,11 +150,9 @@ int main(int argc, char *argv[]) {
 
 	else
 	{
-		printf("unknown operation");
+		printf("unknown operation\n");
 		return 0;
 	}
-
-	scanf("%s", a);
 
 	return 0;
 }

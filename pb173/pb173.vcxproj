@@ -86,6 +86,7 @@
     <Link>
       <AdditionalLibraryDirectories>/LIBPATH:"C:\Users\"Marek Vančík"\Documents\"Visual Studio 2015"\Projects\mbedtls-2.2.1\visualc\VS2010\Release";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>C:\Users\Marek Vančík\Documents\Visual Studio 2015\Projects\mbedtls-2.2.1\visualc\VS2010\Release\mbedTLS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
@@ -101,6 +102,7 @@
     <Link>
       <AdditionalLibraryDirectories>/LIBPATH:"C:\Users\"Marek Vančík"\Documents\"Visual Studio 2015"\Projects\mbedtls-2.2.1\visualc\VS2010\Release";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>C:\Users\Marek Vančík\Documents\Visual Studio 2015\Projects\mbedtls-2.2.1\visualc\VS2010\Release\mbedTLS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
@@ -120,6 +122,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>C:\Users\Marek Vančík\Documents\Visual Studio 2015\Projects\mbedtls-2.2.1\visualc\VS2010\Release\mbedTLS.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>/LIBPATH:"C:\Users\"Marek Vančík"\Documents\"Visual Studio 2015"\Projects\mbedtls-2.2.1\visualc\VS2010\Release";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>NotSet</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
@@ -139,6 +142,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>/LIBPATH:"C:\Users\"Marek Vančík"\Documents\"Visual Studio 2015"\Projects\mbedtls-2.2.1\visualc\VS2010\Release";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>C:\Users\Marek Vančík\Documents\Visual Studio 2015\Projects\mbedtls-2.2.1\visualc\VS2010\Release\mbedTLS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
