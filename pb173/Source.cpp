@@ -9,20 +9,23 @@
 
 using namespace std;
 
+//"C:\Users\Marek Vanèík\Documents\Visual Studio 2015\Projects\mbedtls-2.2.1\visualc\VS2010\Release\mbedTSL.lib"
+
 int main(int argc, char *argv[]) {
 
 	FILE *input, *output, *keyfile;
 	int offset;
 	//unsigned char buffer[1024];
-	unsigned char key[8];
-	unsigned char IV[17] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 , '\0'};
-	unsigned char cinput[17];
-	unsigned char coutput[17];
+	unsigned char key[7];
+	unsigned char IV[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+	unsigned char cinput[16];
+	unsigned char coutput[16];
 
 	size_t input_len = 40;
 	size_t output_len = 0;
 
-	mbedtls_aes_context aes_ctx;
+	//mbedtls_aes_context aes_ctx;
+	mbedtls_cipher_context_t aes_ctx;
 	mbedtls_sha512_context sha_ctx;
 
 	input = fopen(argv[1], "rb");
@@ -49,14 +52,20 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	mbedtls_aes_init(&aes_ctx);
+	//mbedtls_aes_init(&aes_ctx);
 
 	fread(key, 1, 7, keyfile);
+
+	mbedtls_cipher_setup(&aes_ctx, mbedtls_cipher_info_from_type(MBEDTLS_CIPHER_AES_128_CBC));
+	mbedtls_cipher_set_padding_mode(&aes_ctx, MBEDTLS_PADDING_PKCS7);
 
 	int filesize = fseek(input, 0, SEEK_END);
 
 	if (strcmp(argv[4], "-e") == 0)  // encryption
 	{
+		mbedtls_cipher_set_iv(&aes_ctx, IV, 16);
+		mbedtls_cipher_setkey(&aes_ctx, key, 128, MBEDTLS_ENCRYPT);
+
 		fwrite(IV, 1, 16, output);
 
 		for (offset = 0; offset < filesize; offset += 16)
@@ -70,8 +79,10 @@ int main(int argc, char *argv[]) {
 				return 0;
 			}
 
-			mbedtls_aes_setkey_enc(&aes_ctx, key, 128);
-			mbedtls_aes_crypt_cbc(&aes_ctx, MBEDTLS_AES_ENCRYPT, n, IV, cinput, coutput);
+			mbedtls_cipher_update(&aes_ctx, cinput, n, coutput, (size_t*)&n);
+
+			//mbedtls_aes_setkey_enc(&aes_ctx, key, 128);
+			//mbedtls_aes_crypt_cbc(&aes_ctx, MBEDTLS_AES_ENCRYPT, n, IV, cinput, coutput);
 
 			if (fwrite(coutput, 1, n, output) != n)
 			{
@@ -79,7 +90,7 @@ int main(int argc, char *argv[]) {
 				return 0;
 			}
 		
-			memcpy(IV, cinput, 16);
+			//memcpy(IV, cinput, 16);
 		}
 
 		// HASH
@@ -152,6 +163,9 @@ int main(int argc, char *argv[]) {
 
 		fread(IV, 1, 16, input);
 
+		mbedtls_cipher_set_iv(&aes_ctx, IV, 16);
+		mbedtls_cipher_setkey(&aes_ctx, key, 128, MBEDTLS_DECRYPT);
+
 		for (offset = 0; offset < filesize - 9; offset += 16)
 		{
 			int n = ((filesize - 64) - offset > 16) ? 16 : (int)
@@ -163,8 +177,10 @@ int main(int argc, char *argv[]) {
 				return 0;
 			}
 
-			mbedtls_aes_setkey_enc(&aes_ctx, key, 128);
-			mbedtls_aes_crypt_cbc(&aes_ctx, MBEDTLS_AES_DECRYPT, n, IV, cinput, coutput);
+			mbedtls_cipher_update(&aes_ctx, cinput, n, coutput, (size_t*)&n);
+
+			//mbedtls_aes_setkey_enc(&aes_ctx, key, 128);
+			//mbedtls_aes_crypt_cbc(&aes_ctx, MBEDTLS_AES_DECRYPT, n, IV, cinput, coutput);
 
 			if (fwrite(coutput, 1, n, output) != n)
 			{
@@ -172,7 +188,7 @@ int main(int argc, char *argv[]) {
 				return 0;
 			}
 
-			memcpy(IV, cinput, 16);
+			//memcpy(IV, cinput, 16);
 		}
 	}
 
