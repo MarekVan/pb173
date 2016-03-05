@@ -3,8 +3,8 @@
 * @author Martin Ukrop
 * @licence MIT Licence
 */
-
-#include "Source.cpp"
+#define _CRT_NONSTDC_NO_WARNINGS
+#include "main.cpp"
 
 // Tell CATCH to define its main function here
 #define CATCH_CONFIG_MAIN
@@ -36,4 +36,8 @@ TEST_CASE("Encrypt -> Decrypt testing", "") {
 	fread(output1, 1, filesize % 128, input);
 	fread(output1, 1, filesize % 128, check);
 	CHECK("Comparing outputs", memcmp(output1, output2, filesize % 128) == 0);
+
+	fclose(input);
+	fclose(output);
+	fclose(check);
 }

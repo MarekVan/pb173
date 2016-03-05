@@ -150,6 +150,7 @@ int decrypt(FILE *input, FILE *output, unsigned char *key) {
 	return 0;
 }
 
+/*
 int main(int argc, char *argv[]) {
 
 	FILE *input, *output, *keyfile;
@@ -194,7 +195,7 @@ int main(int argc, char *argv[]) {
 	fread(key, 1, 16, keyfile);
 	fclose(keyfile);
 	//mbedtls_aes_setkey_enc(&aes_ctx, key, 128);
-
+	*/
 	/*mbedtls_cipher_setup(&aes_ctx, mbedtls_cipher_info_from_type(MBEDTLS_CIPHER_AES_128_CBC));
 	mbedtls_cipher_set_padding_mode(&aes_ctx, MBEDTLS_PADDING_PKCS7);
 
@@ -205,10 +206,10 @@ int main(int argc, char *argv[]) {
 	int filesize = ftell(input);
 	rewind(input);*/
 
-	if (strcmp(argv[4], "-e") == 0)  // encryption
+	/*if (strcmp(argv[4], "-e") == 0)  // encryption
 	{
 		return encrypt(input, output, key, IV);
-		
+		*/
 		/*mbedtls_cipher_set_iv(&aes_ctx, IV, 16);
 		mbedtls_cipher_setkey(&aes_ctx, key, 128, MBEDTLS_ENCRYPT);
 
@@ -244,11 +245,11 @@ int main(int argc, char *argv[]) {
 
 	mbedtls_sha512_finish(&sha_ctx, sha_output);
 	fwrite(sha_output, 1, 64, output);*/
-}
+/*}
 
 	else if (strcmp(argv[4], "-d") == 0)  // decrytion
 	{
-		decrypt(input, output, key);
+		decrypt(input, output, key);*/
 		/*if (filesize < 16)
 		{
 			printf("file is invalid\n");
@@ -301,7 +302,7 @@ int main(int argc, char *argv[]) {
 		{
 			printf("hash ok\n");
 		}*/
-	}
+	/*}
 
 	else
 	{
@@ -312,4 +313,4 @@ int main(int argc, char *argv[]) {
 	fclose(output);
 
 	return 0;
-}
+}*/
