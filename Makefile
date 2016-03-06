@@ -4,8 +4,7 @@
 # Variable settings
 CXXFLAGS=-Wall -Wextra
 INCLUDES = -I/mbedtls-2.2.1/include
-LIBS = -L/mbedtls-2.2.1/library -lm
-LDFLAGS = -g
+LIBS = -L/mbedtls-2.2.1/library
 SOURCES_GEN=pb173/crypto.cpp
 # Source and object lists for main program
 SOURCES_MAIN=$(SOURCES_GEN) pb173/main.cpp
@@ -35,15 +34,15 @@ test: main-test
 
 # Depends on all object files and main, links the final binary.
 main: $(OBJECTS_MAIN)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) $(LDFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $@ $^
 
 # Depends on all object files and test, links the test binary.
 main-test: $(OBJECTS_TEST)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) $(LDFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $@ $^
 
 # Automatic rule for all object files in build directory
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) $(LDFLAGS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -c -o $@ $<
 
 clean:
 	rm -fr $(OBJECTS_MAIN) $(OBJECTS_TEST)
