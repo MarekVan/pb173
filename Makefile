@@ -2,7 +2,7 @@
 # Variables CC and CXX are automatically set on all UNIX systems.
 
 # Variable settings
-CXXFLAGS=-Wall -Wextraò
+CXXFLAGS=-Wall -Wextra
 INCLUDES = -I/mbedtls-2.2.1/include
 LIBS = -L/mbedtls-2.2.1/library -lm
 LDFLAGS = -g
