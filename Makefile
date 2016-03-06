@@ -2,8 +2,10 @@
 # Variables CC and CXX are automatically set on all UNIX systems.
 
 # Variable settings
-CXXFLAGS=-Wall -Wextra
-LDFLAGS= -Lmbedtls-2.2.1/visualc/VS2010/ -lmbedTLS.lib 
+CXXFLAGS=-Wall -Wextraò
+INCLUDES = -I/mbedtls-2.2.1/include
+LIBS = -L/mbedtls-2.2.1/library -lm
+LDFLAGS = -g
 SOURCES_GEN=pb173/crypto.cpp
 # Source and object lists for main program
 SOURCES_MAIN=$(SOURCES_GEN) pb173/main.cpp
@@ -33,15 +35,15 @@ test: main-test
 
 # Depends on all object files and main, links the final binary.
 main: $(OBJECTS_MAIN)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) $(LDFLAGS) -o $@ $^
 
 # Depends on all object files and test, links the test binary.
 main-test: $(OBJECTS_TEST)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) $(LDFLAGS) -o $@ $^
 
 # Automatic rule for all object files in build directory
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) $(LDFLAGS) -c -o $@ $<
 
 clean:
 	rm -fr $(OBJECTS_MAIN) $(OBJECTS_TEST)
