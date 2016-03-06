@@ -2,7 +2,8 @@
 # Variables CC and CXX are automatically set on all UNIX systems.
 
 # Variable settings
-CXXFLAGS=-Wall -Wextra 
+CXXFLAGS=-Wall -Wextra
+LDFLAGS= -Lmbedtls-2.2.1/visualc/VS2010 -lmbedTLS 
 SOURCES_GEN=pb173/crypto.cpp
 # Source and object lists for main program
 SOURCES_MAIN=$(SOURCES_GEN) pb173/main.cpp
@@ -10,7 +11,7 @@ OBJECTS_MAIN=$(SOURCES_MAIN:.cpp=.o)
 # Source and object lists for testing binary
 SOURCES_TEST=$(SOURCES_GEN) pb173/testing.cpp
 OBJECTS_TEST=$(SOURCES_TEST:.cpp=.o)
-LDFLAGS= -Lmbedtls-2.2.1/visualc/VS2010 -lmbedTLS
+
 
 # Most frequently used automatic variables:
 # $@ (name of the target rule)
@@ -32,15 +33,15 @@ test: main-test
 
 # Depends on all object files and main, links the final binary.
 main: $(OBJECTS_MAIN)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
 # Depends on all object files and test, links the test binary.
 main-test: $(OBJECTS_TEST)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
 # Automatic rule for all object files in build directory
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -c -o $@ $<
 
 clean:
 	rm -fr $(OBJECTS_MAIN) $(OBJECTS_TEST)
