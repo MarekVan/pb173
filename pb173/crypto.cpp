@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,35 +9,29 @@
 int encrypt(char *arg1, char *arg2, char *arg3) {
 
 	FILE *input, *output, *keyfile;
-	unsigned char key[16];
-	//unsigned char IV[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	unsigned char key[16];	
+	unsigned char IV[16];
 
-	//unsigned char IV[16] = { '0x00', '0x01', '0x02', '0x03', '0x04', '0x05', '0x06', '0x07', '0x08', '0x09', '0x0A', '0x0B', '0x0C', '0x0D', '0x0E', '0x0F' };
+	input = fopen(arg1, "rb");
 
-	//unsigned char IV[16] = { '0x2b', '0x7e', '0x15', '0x16', '0x28', '0xae', '0xd2', '0xa6', '0xab', '0xf7', '0x15', '0x88', '0x09', '0xcf', '0x4f', '0x3c' };
-
-	unsigned char IV[16];// = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F };
-
-	errno_t err = fopen_s(&input, arg1, "rb");
-
-	if (err != 0)
+	if (!input)
 	{
 		printf("coudlnt open input file\n");
 		return 1;
 	}
 
-	err = fopen_s(&output, arg2, "wb");
+	output = fopen(arg2, "wb");
 
-	if (err != 0)
+	if (!output)
 	{
 		printf("coudlnt open output file\n");
 		fclose(input);
 		return 1;
 	}
 
-	err = fopen_s(&keyfile, arg3, "rb");
+	keyfile = fopen(arg3, "rb");
 
-	if (err != 0)
+	if (!keyfile)
 	{
 		printf("coudlnt open key file\n");
 		fclose(input);
@@ -69,7 +64,7 @@ int encrypt(char *arg1, char *arg2, char *arg3) {
 	unsigned char cinput[16];
 	unsigned char coutput[16];
 	unsigned char sha_output[64];
-	int n;
+	unsigned int n;
 
 	mbedtls_cipher_setup(&aes_ctx, mbedtls_cipher_info_from_type(MBEDTLS_CIPHER_AES_128_CBC));
 	mbedtls_cipher_set_padding_mode(&aes_ctx, MBEDTLS_PADDING_PKCS7);
@@ -140,26 +135,26 @@ int decrypt(char *arg1, char *arg2, char *arg3) {
 	unsigned char key[16];
 	unsigned char IV[16];
 
-	errno_t err = fopen_s(&input, arg1, "rb");
+	input = fopen(arg1, "rb");
 
-	if (err != 0)
+	if (!input)
 	{
 		printf("coudlnt open input file\n");
 		return 1;
 	}
 
-	err = fopen_s(&output, arg2, "wb");
+	output = fopen(arg2, "wb");
 
-	if (err != 0)
+	if (!output)
 	{
 		printf("coudlnt open output file\n");
 		fclose(input);
 		return 1;
 	}
 
-	err = fopen_s(&keyfile, arg3, "rb");
+	keyfile = fopen(arg3, "rb");
 
-	if (err != 0)
+	if (!keyfile)
 	{
 		printf("coudlnt open key file\n");
 		fclose(input);
@@ -192,7 +187,7 @@ int decrypt(char *arg1, char *arg2, char *arg3) {
 	unsigned char cinput[16];
 	unsigned char coutput[16];
 	unsigned char sha_output[64];
-	int n;
+	unsigned int n;
 
 	mbedtls_cipher_setup(&aes_ctx, mbedtls_cipher_info_from_type(MBEDTLS_CIPHER_AES_128_CBC));
 	mbedtls_cipher_set_padding_mode(&aes_ctx, MBEDTLS_PADDING_PKCS7);
