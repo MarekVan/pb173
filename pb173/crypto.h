@@ -4,7 +4,6 @@
 * @author Martin Ukrop
 * @licence MIT Licence
 */
-#include <stdio.h>
 
 #ifndef _CRYPTO_H_
 #define _CRYPTO_H_

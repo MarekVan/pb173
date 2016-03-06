@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "mbedtls/md.h"
-#include "mbedtls/aesni.h"
 #include "mbedtls/sha512.h"
 #include "mbedtls/cipher.h"
-#include "mbedtls/aes.h"
 #include "crypto.h"
 
 int encrypt(char *arg1, char *arg2, char *arg3) {
