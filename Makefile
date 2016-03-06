@@ -10,6 +10,7 @@ OBJECTS_MAIN=$(SOURCES_MAIN:.cpp=.o)
 # Source and object lists for testing binary
 SOURCES_TEST=$(SOURCES_GEN) pb173/testing.cpp
 OBJECTS_TEST=$(SOURCES_TEST:.cpp=.o)
+LDFLAGS= -Lmbedtls-2.2.1/visualc/VS2010 -lmbedTLS
 
 # Most frequently used automatic variables:
 # $@ (name of the target rule)
