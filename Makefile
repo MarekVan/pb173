@@ -3,12 +3,12 @@
 
 # Variable settings
 CXXFLAGS=-Wall -Wextra 
-SOURCES_GEN=src/krypto.cpp
+SOURCES_GEN=pb173/crypto.cpp
 # Source and object lists for main program
-SOURCES_MAIN=$(SOURCES_GEN) src/main.cpp
+SOURCES_MAIN=$(SOURCES_GEN) pb173/main.cpp
 OBJECTS_MAIN=$(SOURCES_MAIN:.cpp=.o)
 # Source and object lists for testing binary
-SOURCES_TEST=$(SOURCES_GEN) src/testing.cpp
+SOURCES_TEST=$(SOURCES_GEN) pb173/testing.cpp
 OBJECTS_TEST=$(SOURCES_TEST:.cpp=.o)
 
 # Most frequently used automatic variables:
