@@ -3,7 +3,7 @@
 
 # Variable settings
 CXXFLAGS=-Wall -Wextra
-LDFLAGS= -Lmbedtls-2.2.1/visualc/VS2010 -lmbedTLS 
+LDFLAGS= -Lmbedtls-2.2.1/visualc/VS2010/ -lmbedTLS.lib 
 SOURCES_GEN=pb173/crypto.cpp
 # Source and object lists for main program
 SOURCES_MAIN=$(SOURCES_GEN) pb173/main.cpp
