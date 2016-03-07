@@ -96,34 +96,40 @@ int encrypt(char *arg1, char *arg2, char *arg3) {
 		mbedtls_cipher_update(&aes_ctx, cinput, n, coutput, (size_t*)&n);
 		mbedtls_sha512_update(&sha_ctx, coutput, n);
 
-		if (fwrite(coutput, sizeof(char), n, output) != n)
+		fwrite(coutput, sizeof(char), n, output);
+
+		/*if (fwrite(coutput, sizeof(char), n, output) != n)
 		{
 			printf("fwrite failed\n");
 			fclose(input);
 			fclose(output);
 			return 4;
-		}
+		}*/
 	}
 
 	mbedtls_cipher_finish(&aes_ctx, coutput, (size_t*)&n);
 	mbedtls_sha512_update(&sha_ctx, coutput, n);
 	mbedtls_sha512_finish(&sha_ctx, sha_output);
 
-	if (fwrite(coutput, sizeof(char), n, output) != n)
-	{
-		printf("fwrite failed\n");
-		fclose(input);
-		fclose(output);
-		return 4;
-	}
+	fwrite(coutput, sizeof(char), n, output);
 
-	if (fwrite(sha_output, sizeof(char), 64, output) != 64)
+	/*if (fwrite(coutput, sizeof(char), n, output) != n)
 	{
 		printf("fwrite failed\n");
 		fclose(input);
 		fclose(output);
 		return 4;
-	}
+	}*/
+	
+	fwrite(sha_output, sizeof(char), 64, output);
+
+	/*if (fwrite(sha_output, sizeof(char), 64, output) != 64)
+	{
+		printf("fwrite failed\n");
+		fclose(input);
+		fclose(output);
+		return 4;
+	}*/
 
 	fclose(input);
 	fclose(output);
@@ -231,24 +237,28 @@ int decrypt(char *arg1, char *arg2, char *arg3) {
 		mbedtls_sha512_update(&sha_ctx, cinput, n);
 		mbedtls_cipher_update(&aes_ctx, cinput, n, coutput, (size_t*)&n);
 
-		if (fwrite(coutput, sizeof(char), n, output) != n)
+		fwrite(coutput, sizeof(char), n, output);
+
+		/*if (fwrite(coutput, sizeof(char), n, output) != n)
 		{
 			printf("fwrite failed\n");
 			fclose(input);
 			fclose(output);
 			return 4;
-		}
+		}*/
 	}
 
 	mbedtls_cipher_finish(&aes_ctx, coutput, (size_t*)&n);
+	
+	fwrite(coutput, sizeof(char), n, output);
 
-	if (fwrite(coutput, sizeof(char), n, output) != n)
+	/*if (fwrite(coutput, sizeof(char), n, output) != n)
 	{
 		printf("fwrite failed\n");
 		fclose(input);
 		fclose(output);
 		return 4;
-	}
+	}*/
 
 	unsigned char control_hash[64];
 	fread(control_hash, sizeof(char), 64, input);

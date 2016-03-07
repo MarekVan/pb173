@@ -25,9 +25,11 @@ TEST_CASE("Input -> Encrypt -> Decrypt -> Input", "first") {
 	CHECK(encrypt("testFiles/testDataInput1.txt", "testFiles/testDataOutput1.txt", "testFiles/testDataKey1.txt") == 0);
 	CHECK(decrypt("testFiles/testDataOutput1.txt", "testFiles/testDataInput1.txt", "testFiles/testDataKey1.txt") == 0);
 	
-	FILE *input = fopen("testFiles/testDataInput1.txt", "br");
-	FILE *check = fopen("testFiles/testDataCheck1.txt", "br");
-	rewind(input);
+	FILE *input; 
+	input = fopen("testFiles/testDataInput1.txt", "br");
+	FILE *check;
+	check = fopen("testFiles/testDataCheck1.txt", "br");
+	
 	fseek(input, 0, SEEK_END);
 	int filesize = ftell(input);
 	rewind(input);
