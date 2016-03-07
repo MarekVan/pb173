@@ -4,6 +4,7 @@
 * @licence MIT Licence
 */
 #define _CRT_NONSTDC_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include "crypto.h"
 
 // Tell CATCH to define its main function here
@@ -35,7 +36,6 @@ TEST_CASE("Input -> Encrypt -> Decrypt -> Input", "first") {
 	CHECK("Outputs should be equal", memcmp(output1, output2, filesize % 128) == 0);
 
 	fclose(input);
-	fclose(output);
 	fclose(check);
 }
 
@@ -76,7 +76,6 @@ TEST_CASE("Test vector 1", "fifth") {
 	CHECK("Outputs should be equal", memcmp(output1, output2, filesize % 128) == 0);
 
 	fclose(input);
-	fclose(output);
 	fclose(check);
 }
 
@@ -104,6 +103,5 @@ TEST_CASE("Test vector 2", "sixth") {
 	CHECK("Outputs should be equal", memcmp(output1, output2, filesize % 128) == 0);
 
 	fclose(input);
-	fclose(output);
 	fclose(check);
 }

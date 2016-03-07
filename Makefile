@@ -2,15 +2,19 @@
 # Variables CC and CXX are automatically set on all UNIX systems.
 
 # Variable settings
+CFLAGS = -Wall -Wextra
 CXXFLAGS=-Wall -Wextra
-INCLUDES = -I/mbedtls-2.2.1/include
-LIBS = -L/mbedtls-2.2.1/library
-SOURCES_GEN=pb173/crypto.cpp
+
+SOURCES_ALL=$(wildcard pb173/*.c) $(wildcard pb173/*.cpp)
+SOURCES_GEN=$(filter-out pb173/main.cpp pb173/testing.cpp,$(SOURCES_ALL))
+
 # Source and object lists for main program
 SOURCES_MAIN=$(SOURCES_GEN) pb173/main.cpp
+MIXED_MAIN=$(SOURCES_MAIN:.c=.o)
 OBJECTS_MAIN=$(SOURCES_MAIN:.cpp=.o)
 # Source and object lists for testing binary
 SOURCES_TEST=$(SOURCES_GEN) pb173/testing.cpp
+MIXED_TEST=$(SOURCES_TEST:.c=.o)
 OBJECTS_TEST=$(SOURCES_TEST:.cpp=.o)
 
 
@@ -34,15 +38,17 @@ test: main-test
 
 # Depends on all object files and main, links the final binary.
 main: $(OBJECTS_MAIN)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
 # Depends on all object files and test, links the test binary.
 main-test: $(OBJECTS_TEST)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
 # Automatic rule for all object files in build directory
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 clean:
 	rm -fr $(OBJECTS_MAIN) $(OBJECTS_TEST)
