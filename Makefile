@@ -5,7 +5,7 @@
 CFLAGS = -Wall -Wextra
 CXXFLAGS=-Wall -Wextra
 
-SOURCES_ALL=$(wildcard pb173/*.c) $(wildcard pb173/*.cpp)
+SOURCES_ALL=$(wildcard pb173/*.c) $(wildcard pb173/*.cpp) $(wildcard pb173/mbedtls_sources/*.c)
 SOURCES_GEN=$(filter-out pb173/main.cpp pb173/testing.cpp,$(SOURCES_ALL))
 # Source and object lists for main program
 SOURCES_MAIN=$(SOURCES_GEN) pb173/main.cpp
