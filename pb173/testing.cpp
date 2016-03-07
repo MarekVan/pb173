@@ -12,11 +12,27 @@
 #include "catch.hpp"
 
 TEST_CASE("Input -> Encrypt -> Decrypt -> Input", "first") {
-	CHECK(encrypt("testDataInput1", "testDataOutput1", "testDataKey1") == 0);
-	CHECK(decrypt("testDataOutput1", "testDataInput1", "testDataKey1") == 0);
+
+	/*FILE *pokus = fopen("kdesi.txt", "w");
+
+	if(pokus)
+	{
+		fwrite("tralala", 1, 7, pokus);
+		fclose(pokus);
+	}*/
 	
-	FILE *input = fopen("testDataInput1.txt", "br");
-	FILE *check = fopen("testDataCheck1.txt", "br");
+
+	CHECK(encrypt("testFiles/testDataInput1.txt", "testFiles/testDataOutput1.txt", "testFiles/testDataKey1.txt") == 0);
+	CHECK(decrypt("testFiles/testDataOutput1.txt", "testFiles/testDataInput1.txt", "testFiles/testDataKey1.txt") == 0);
+	
+	FILE *input; 
+	input = fopen("testFiles/testDataInput1.txt", "br");
+	FILE *check = fopen("testFiles/testDataCheck1.txt", "br");
+	
+	if (!input)
+	{
+		return;
+	}
 	rewind(input);
 	fseek(input, 0, SEEK_END);
 	int filesize = ftell(input);
@@ -45,18 +61,18 @@ TEST_CASE("File doesnt exist", "second") {
 }
 
 TEST_CASE("File was corrupted", "third") {
-	CHECK(decrypt("CorruptedInput.txt", "someting.txt", "testDataKey2") == 5);
+	CHECK(decrypt("testFiles/CorruptedInput.txt", "testFiles/someting.txt", "testFiles/testDataKey2") == 5);
 }
 
 TEST_CASE("Wrong key", "fourth") {
-	CHECK(decrypt("testDataInput1.txt", "testDataOutput1.txt", "WrongKey.txt") == 6);
+	CHECK(decrypt("testFiles/testDataInput1.txt", "testFiles/testDataOutput1.txt", "testFiles/WrongKey.txt") == 6);
 }
 
 TEST_CASE("Test vector 1", "fifth") {
-	CHECK(decrypt("testVectorInput1.txt", "testVectorOutput1.txt", "testVectorKey1.txt") == 0);
+	CHECK(decrypt("testFiles/testVectorInput1.txt", "testFiles/testVectorOutput1.txt", "testFiles/testVectorKey1.txt") == 0);
 
-	FILE *input = fopen("testVectorOutput1.txt", "br");
-	FILE *check = fopen("testVectorCheck1.txt", "br");
+	FILE *input = fopen("testFiles/testVectorOutput1.txt", "br");
+	FILE *check = fopen("testFiles/testVectorCheck1.txt", "br");
 	rewind(input);
 	fseek(input, 0, SEEK_END);
 	int filesize = ftell(input);
@@ -80,10 +96,10 @@ TEST_CASE("Test vector 1", "fifth") {
 }
 
 TEST_CASE("Test vector 2", "sixth") {
-	CHECK(decrypt("testVectorInput2.txt", "testVectorOutput2.txt", "testVectorKey2.txt") == 0);
+	CHECK(decrypt("testFiles/testVectorInput2.txt", "testFiles/testVectorOutput2.txt", "testFiles/testVectorKey2.txt") == 0);
 
-	FILE *input = fopen("testVectorOutput2.txt", "br");
-	FILE *check = fopen("testVectorCheck2.txt", "br");
+	FILE *input = fopen("testFiles/testVectorOutput2.txt", "br");
+	FILE *check = fopen("testFiles/testVectorCheck2.txt", "br");
 	rewind(input);
 	fseek(input, 0, SEEK_END);
 	int filesize = ftell(input);
