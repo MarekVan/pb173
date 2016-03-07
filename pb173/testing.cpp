@@ -25,14 +25,8 @@ TEST_CASE("Input -> Encrypt -> Decrypt -> Input", "first") {
 	CHECK(encrypt("testFiles/testDataInput1.txt", "testFiles/testDataOutput1.txt", "testFiles/testDataKey1.txt") == 0);
 	CHECK(decrypt("testFiles/testDataOutput1.txt", "testFiles/testDataInput1.txt", "testFiles/testDataKey1.txt") == 0);
 	
-	FILE *input; 
-	input = fopen("testFiles/testDataInput1.txt", "br");
+	FILE *input = fopen("testFiles/testDataInput1.txt", "br");
 	FILE *check = fopen("testFiles/testDataCheck1.txt", "br");
-	
-	if (!input)
-	{
-		return;
-	}
 	rewind(input);
 	fseek(input, 0, SEEK_END);
 	int filesize = ftell(input);
@@ -42,13 +36,13 @@ TEST_CASE("Input -> Encrypt -> Decrypt -> Input", "first") {
 
 	for (int offset = 0; offset < filesize - filesize % 128; offset += 128)
 	{
-		fread(output1, 1, 128, input);
-		fread(output1, 1, 128, check);
+		fread(output1, sizeof(char), 128, input);
+		fread(output1, sizeof(char), 128, check);
 		CHECK(memcmp(output1, output2, 128) == 0);
 	}
 
-	fread(output1, 1, filesize % 128, input);
-	fread(output1, 1, filesize % 128, check);
+	fread(output1, sizeof(char), filesize % 128, input);
+	fread(output1, sizeof(char), filesize % 128, check);
 	CHECK(memcmp(output1, output2, filesize % 128) == 0);
 
 	fclose(input);
@@ -61,7 +55,7 @@ TEST_CASE("File doesnt exist", "second") {
 }
 
 TEST_CASE("File was corrupted", "third") {
-	CHECK(decrypt("testFiles/CorruptedInput.txt", "testFiles/someting.txt", "testFiles/testDataKey2") == 5);
+	CHECK(decrypt("testFiles/CorruptedInput.txt", "testFiles/someting.txt", "testFiles/testDataKey1") == 5);
 }
 
 TEST_CASE("Wrong key", "fourth") {
@@ -82,13 +76,13 @@ TEST_CASE("Test vector 1", "fifth") {
 
 	for (int offset = 0; offset < filesize - filesize % 128; offset += 128)
 	{
-		fread(output1, 1, 128, input);
-		fread(output1, 1, 128, check);
+		fread(output1, sizeof(char), 128, input);
+		fread(output1, sizeof(char), 128, check);
 		CHECK(memcmp(output1, output2, 128) == 0);
 	}
 
-	fread(output1, 1, filesize % 128, input);
-	fread(output1, 1, filesize % 128, check);
+	fread(output1, sizeof(char), filesize % 128, input);
+	fread(output1, sizeof(char), filesize % 128, check);
 	CHECK(memcmp(output1, output2, filesize % 128) == 0);
 
 	fclose(input);
@@ -109,13 +103,13 @@ TEST_CASE("Test vector 2", "sixth") {
 
 	for (int offset = 0; offset < filesize - filesize % 128; offset += 128)
 	{
-		fread(output1, 1, 128, input);
-		fread(output1, 1, 128, check);
+		fread(output1, sizeof(char), 128, input);
+		fread(output1, sizeof(char), 128, check);
 		CHECK(memcmp(output1, output2, 128) == 0);
 	}
 
-	fread(output1, 1, filesize % 128, input);
-	fread(output1, 1, filesize % 128, check);
+	fread(output1, sizeof(char), filesize % 128, input);
+	fread(output1, sizeof(char), filesize % 128, check);
 	CHECK(memcmp(output1, output2, filesize % 128) == 0);
 
 	fclose(input);
