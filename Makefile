@@ -7,16 +7,14 @@ CXXFLAGS=-Wall -Wextra
 
 SOURCES_ALL=$(wildcard pb173/*.c) $(wildcard pb173/*.cpp)
 SOURCES_GEN=$(filter-out pb173/main.cpp pb173/testing.cpp,$(SOURCES_ALL))
-
 # Source and object lists for main program
 SOURCES_MAIN=$(SOURCES_GEN) pb173/main.cpp
 MIXED_MAIN=$(SOURCES_MAIN:.c=.o)
-OBJECTS_MAIN=$(SOURCES_MAIN:.cpp=.o)
+OBJECTS_MAIN=$(MIXED_MAIN:.cpp=.o)
 # Source and object lists for testing binary
 SOURCES_TEST=$(SOURCES_GEN) pb173/testing.cpp
 MIXED_TEST=$(SOURCES_TEST:.c=.o)
-OBJECTS_TEST=$(SOURCES_TEST:.cpp=.o)
-
+OBJECTS_TEST=$(MIXED_TEST:.cpp=.o)
 
 # Most frequently used automatic variables:
 # $@ (name of the target rule)
@@ -47,6 +45,7 @@ main-test: $(OBJECTS_TEST)
 # Automatic rule for all object files in build directory
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
+	
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
