@@ -84,13 +84,14 @@ int encrypt(char *arg1, char *arg2, char *arg3) {
 		n = (filesize - offset > 16) ? 16 : (int)
 			(filesize - offset);
 
-		if (fread(cinput, sizeof(char), n, input) != n)
+		fread(cinput, sizeof(char), n, input);
+		/*if (fread(cinput, sizeof(char), n, input) != n)
 		{
 			printf("fread failed\n");
 			fclose(input);
 			fclose(output);
 			return 3;
-		}
+		}*/
 
 		mbedtls_cipher_update(&aes_ctx, cinput, n, coutput, (size_t*)&n);
 		mbedtls_sha512_update(&sha_ctx, coutput, n);
@@ -217,13 +218,15 @@ int decrypt(char *arg1, char *arg2, char *arg3) {
 		n = (filesize - offset > 16) ? 16 : (int)
 			(filesize - offset);
 
-		if (fread(cinput, sizeof(char), n, input) != n)
+		fread(cinput, sizeof(char), n, input);
+
+		/*if (fread(cinput, sizeof(char), n, input) != n)
 		{
 			printf("fread failed\n");
 			fclose(input);
 			fclose(output);
 			return 3;
-		}
+		}*/
 		
 		mbedtls_sha512_update(&sha_ctx, cinput, n);
 		mbedtls_cipher_update(&aes_ctx, cinput, n, coutput, (size_t*)&n);
