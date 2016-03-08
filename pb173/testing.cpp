@@ -46,7 +46,7 @@ TEST_CASE("File doesnt exist", "second") {
 }
 
 TEST_CASE("File was corrupted", "third") {
-	CHECK(decrypt("testFiles/CorruptedInput.txt", "testFiles/something.txt", "testFiles/testDataKey1") == 5);
+	CHECK(decrypt("testFiles/corruptedInput.txt", "testFiles/something.txt", "testFiles/testDataKey1") == 5);
 }
 
 TEST_CASE("Wrong key", "fourth") {
@@ -54,7 +54,7 @@ TEST_CASE("Wrong key", "fourth") {
 }
 
 TEST_CASE("Test vector 1", "fifth") {
-	CHECK(decrypt("testFiles/testVectorInput1.txt", "testFiles/testVectorOutput1.txt", "testFiles/testVectorKey1.txt") == 0);
+	CHECK(encrypt("testFiles/testVectorInput1.txt", "testFiles/testVectorOutput1.txt", "testFiles/testVectorKey1.txt") == 0);
 
 	FILE *input = fopen("testFiles/testVectorOutput1.txt", "rb");
 	FILE *check = fopen("testFiles/testVectorCheck1.txt", "rb");
@@ -81,7 +81,7 @@ TEST_CASE("Test vector 1", "fifth") {
 }
 
 TEST_CASE("Test vector 2", "sixth") {
-	CHECK(decrypt("testFiles/testVectorInput2.txt", "testFiles/testVectorOutput2.txt", "testFiles/testVectorKey2.txt") == 0);
+	CHECK(encrypt("testFiles/testVectorInput2.txt", "testFiles/testVectorOutput2.txt", "testFiles/testVectorKey2.txt") == 0);
 
 	FILE *input = fopen("testFiles/testVectorOutput2.txt", "rb");
 	FILE *check = fopen("testFiles/testVectorCheck2.txt", "rb");
