@@ -13,23 +13,12 @@
 
 TEST_CASE("Input -> Encrypt -> Decrypt -> Input", "first") {
 
-	/*FILE *pokus = fopen("kdesi.txt", "w");
-
-	if(pokus)
-	{
-		fwrite("tralala", 1, 7, pokus);
-		fclose(pokus);
-	}*/
-	
-
 	CHECK(encrypt("testFiles/testDataInput1.txt", "testFiles/testDataOutput1.txt", "testFiles/testDataKey1.txt") == 0);
 	CHECK(decrypt("testFiles/testDataOutput1.txt", "testFiles/testDataInput1.txt", "testFiles/testDataKey1.txt") == 0);
 	
-	FILE *input; 
-	input = fopen("testFiles/testDataInput1.txt", "br");
-	FILE *check;
-	check = fopen("testFiles/testDataCheck1.txt", "br");
-	
+	FILE *input = fopen("testFiles/testDataInput1.txt", "rb");
+	FILE *check = fopen("testFiles/testDataCheck1.txt", "rb");
+
 	fseek(input, 0, SEEK_END);
 	int filesize = ftell(input);
 	rewind(input);
@@ -67,8 +56,8 @@ TEST_CASE("Wrong key", "fourth") {
 TEST_CASE("Test vector 1", "fifth") {
 	CHECK(decrypt("testFiles/testVectorInput1.txt", "testFiles/testVectorOutput1.txt", "testFiles/testVectorKey1.txt") == 0);
 
-	FILE *input = fopen("testFiles/testVectorOutput1.txt", "br");
-	FILE *check = fopen("testFiles/testVectorCheck1.txt", "br");
+	FILE *input = fopen("testFiles/testVectorOutput1.txt", "rb");
+	FILE *check = fopen("testFiles/testVectorCheck1.txt", "rb");
 	rewind(input);
 	fseek(input, 0, SEEK_END);
 	int filesize = ftell(input);
@@ -94,8 +83,8 @@ TEST_CASE("Test vector 1", "fifth") {
 TEST_CASE("Test vector 2", "sixth") {
 	CHECK(decrypt("testFiles/testVectorInput2.txt", "testFiles/testVectorOutput2.txt", "testFiles/testVectorKey2.txt") == 0);
 
-	FILE *input = fopen("testFiles/testVectorOutput2.txt", "br");
-	FILE *check = fopen("testFiles/testVectorCheck2.txt", "br");
+	FILE *input = fopen("testFiles/testVectorOutput2.txt", "rb");
+	FILE *check = fopen("testFiles/testVectorCheck2.txt", "rb");
 	rewind(input);
 	fseek(input, 0, SEEK_END);
 	int filesize = ftell(input);
