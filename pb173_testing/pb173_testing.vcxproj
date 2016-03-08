@@ -130,7 +130,7 @@
     <ClInclude Include="..\pb173\crypto.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\pb173\crypto.c" />
+    <ClCompile Include="..\pb173\crypto.cpp" />
     <ClCompile Include="..\pb173\testing.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

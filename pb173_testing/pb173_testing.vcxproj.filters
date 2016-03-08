@@ -26,7 +26,7 @@
     <ClCompile Include="..\pb173\testing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\pb173\crypto.c">
+    <ClCompile Include="..\pb173\crypto.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
