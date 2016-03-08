@@ -41,12 +41,12 @@ TEST_CASE("Input -> Encrypt -> Decrypt -> Input", "first") {
 }
 
 TEST_CASE("File doesnt exist", "second") {
-	CHECK(encrypt("thisdoesntexist.txt", "someting.txt", "testDataKey1") == 1);
-	CHECK(decrypt("thisdoesntexist.txt", "someting.txt", "testDataKey1") == 1);
+	CHECK(encrypt("thisdoesntexist.txt", "someting.txt", "testDataKey1.txt") == 1);
+	CHECK(decrypt("thisdoesntexist.txt", "someting.txt", "testDataKey1.txt") == 1);
 }
 
 TEST_CASE("File was corrupted", "third") {
-	CHECK(decrypt("testFiles/corruptedInput.txt", "testFiles/something.txt", "testFiles/testDataKey1") == 5);
+	CHECK(decrypt("testFiles/corruptedInput.txt", "testFiles/something.txt", "testFiles/testDataKey1.txt") == 5);
 }
 
 TEST_CASE("Wrong key", "fourth") {
